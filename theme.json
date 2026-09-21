@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "palette": [
+        { "slug": "paper", "color": "#f6f3ee", "name": "Paper" },
+        { "slug": "surface", "color": "#ffffff", "name": "Surface" },
+        { "slug": "ink", "color": "#141414", "name": "Ink" },
+        { "slug": "muted", "color": "#6b6560", "name": "Muted" },
+        { "slug": "line", "color": "#e4dfd6", "name": "Line" },
+        { "slug": "accent", "color": "#c8102e", "name": "Accent" },
+        { "slug": "overlay", "color": "#0c0c0c", "name": "Overlay" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "Figtree, ui-sans-serif, system-ui, sans-serif",
+          "slug": "sans",
+          "name": "Figtree"
+        },
+        {
+          "fontFamily": "\"Playfair Display\", Georgia, serif",
+          "slug": "display",
+          "name": "Playfair Display"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "42rem",
+      "wideSize": "72rem"
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--paper)",
+      "text": "var(--wp--preset--color--ink)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--sans)"
+    },
+    "elements": {
+      "h1": { "typography": { "fontFamily": "var(--wp--preset--font-family--display)" } },
+      "h2": { "typography": { "fontFamily": "var(--wp--preset--font-family--display)" } },
+      "h3": { "typography": { "fontFamily": "var(--wp--preset--font-family--display)" } },
+      "link": { "color": { "text": "var(--wp--preset--color--accent)" } }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+body {
+  font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  color: #141414;
+  background: #f6f3ee;
+}
+
+.editor-styles-wrapper {
+  font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+}
+
+.editor-styles-wrapper a {
+  color: #c8102e;
+}
