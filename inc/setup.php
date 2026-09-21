@@ -185,73 +185,9 @@ function macedonia_mk_excerpt_more() {
 add_filter('excerpt_more', 'macedonia_mk_excerpt_more');
 
 /**
- * After first activation, seed a primary menu from categories if none exists.
+ * After first activation, load the complete newspaper and menus.
  */
 function macedonia_mk_after_switch() {
-    if (wp_get_nav_menu_object('Macedonia.mk')) {
-        return;
-    }
-    $menu_id = wp_create_nav_menu('Macedonia.mk');
-    if (is_wp_error($menu_id)) {
-        return;
-    }
-    wp_update_nav_menu_item($menu_id, 0, array(
-        'menu-item-title'  => macedonia_mk_t('home'),
-        'menu-item-url'    => home_url('/'),
-        'menu-item-status' => 'publish',
-        'menu-item-type'   => 'custom',
-    ));
-    $cats = get_categories(array('hide_empty' => false, 'number' => 10, 'orderby' => 'name'));
-    $preferred = array('makedonija', 'politika', 'ekonomija', 'svet', 'sport', 'kultura', 'hronika', 'zdravje', 'tehnologija', 'zivot');
-    $used = 0;
-    foreach ($preferred as $slug) {
-        $cat = get_category_by_slug($slug);
-        if (! $cat || is_wp_error($cat)) {
-            continue;
-        }
-        wp_update_nav_menu_item($menu_id, 0, array(
-            'menu-item-title'     => $cat->name,
-            'menu-item-object'    => 'category',
-            'menu-item-object-id' => (int) $cat->term_id,
-            'menu-item-type'      => 'taxonomy',
-            'menu-item-status'    => 'publish',
-        ));
-        $used++;
-    }
-    if (0 === $used) {
-        foreach ($cats as $cat) {
-            wp_update_nav_menu_item($menu_id, 0, array(
-                'menu-item-title'     => $cat->name,
-                'menu-item-object'    => 'category',
-                'menu-item-object-id' => (int) $cat->term_id,
-                'menu-item-type'      => 'taxonomy',
-                'menu-item-status'    => 'publish',
-            ));
-        }
-    }
-    $locations = get_theme_mod('nav_menu_locations', array());
-    $locations['primary'] = (int) $menu_id;
-    set_theme_mod('nav_menu_locations', $locations);
-
-    foreach (array(
-        'about'   => array('title' => macedonia_mk_t('about'), 'template' => ''),
-        'contact' => array('title' => macedonia_mk_t('contact'), 'template' => 'page-templates/contact.php'),
-        'embed'   => array('title' => macedonia_mk_t('embed'), 'template' => 'page-templates/embed.php'),
-        'saved'   => array('title' => macedonia_mk_t('saved'), 'template' => 'page-templates/saved.php'),
-    ) as $slug => $info) {
-        if (get_page_by_path($slug)) {
-            continue;
-        }
-        $id = wp_insert_post(array(
-            'post_title'   => $info['title'],
-            'post_name'    => $slug,
-            'post_status'  => 'publish',
-            'post_type'    => 'page',
-            'post_content' => '',
-        ));
-        if ($id && ! is_wp_error($id) && $info['template']) {
-            update_post_meta($id, '_wp_page_template', $info['template']);
-        }
-    }
+    macedonia_mk_seed_site(false);
 }
 add_action('after_switch_theme', 'macedonia_mk_after_switch');

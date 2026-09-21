@@ -19,6 +19,10 @@ function macedonia_mk_reading_minutes($post = null) {
     if (! $post) {
         return 1;
     }
+    $meta = (int) get_post_meta($post->ID, '_macedonia_mk_minutes', true);
+    if ($meta > 0) {
+        return $meta;
+    }
     $words = str_word_count(wp_strip_all_tags($post->post_content));
     return max(1, (int) ceil($words / 200));
 }
@@ -181,6 +185,14 @@ function macedonia_mk_posts($args) {
 }
 
 function macedonia_mk_breaking_posts() {
+    $flagged = macedonia_mk_posts(array(
+        'posts_per_page' => 6,
+        'meta_key'       => '_macedonia_mk_breaking',
+        'meta_value'     => '1',
+    ));
+    if ($flagged) {
+        return $flagged;
+    }
     $slug = macedonia_mk_option('breaking_category', 'itno');
     $cat  = get_category_by_slug($slug);
     if ($cat) {
@@ -203,6 +215,21 @@ function macedonia_mk_breaking_posts() {
 }
 
 function macedonia_mk_trending_posts() {
+    $ranked = macedonia_mk_posts(array(
+        'posts_per_page' => 5,
+        'meta_key'       => '_macedonia_mk_trending',
+        'orderby'        => 'meta_value_num',
+        'order'          => 'ASC',
+        'meta_query'     => array(
+            array(
+                'key'     => '_macedonia_mk_trending',
+                'compare' => 'EXISTS',
+            ),
+        ),
+    ));
+    if (count($ranked) >= 3) {
+        return $ranked;
+    }
     $items = macedonia_mk_posts(array(
         'posts_per_page' => 5,
         'orderby'        => 'comment_count',
