@@ -7,12 +7,12 @@
 if (! defined('ABSPATH')) {
     exit;
 }
-$latest   = macedonia_mk_posts(array('posts_per_page' => 4));
+$latest   = macedonia_mk_posts(array('posts_per_page' => 4, 'orderby' => 'date', 'order' => 'DESC'));
 $popular  = macedonia_mk_trending_posts();
-$about    = get_page_by_path('about');
-$contact  = get_page_by_path('contact');
-$saved    = get_page_by_path('saved');
-$embed    = get_page_by_path('embed');
+$about    = macedonia_mk_existing_page(array('about', 'za-nas', 'za_nas'));
+$contact  = macedonia_mk_existing_page(array('contact', 'kontakt'));
+$saved    = macedonia_mk_existing_page(array('saved', 'zachuvano', 'favorites'));
+$embed    = macedonia_mk_existing_page(array('embed', 'embd'));
 ?>
     </main>
 

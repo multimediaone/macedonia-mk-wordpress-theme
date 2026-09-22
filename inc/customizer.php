@@ -41,23 +41,23 @@ function macedonia_mk_customize_register($wp_customize) {
     }
 
     $wp_customize->add_setting('macedonia_mk_youtube_list', array(
-        'default'           => "https://www.youtube.com/watch?v=BBiZYJW7wbQ | Охрид — пет совети за градот и езерото | 7:10\nhttps://www.youtube.com/watch?v=we7nLWIHvoY | Стара скопска чаршија — прошетка во 4K | 42:36\nhttps://www.youtube.com/watch?v=xpJHPAvXftA | Еден ден во Охрид — Канео и стариот град | 8:24\nhttps://www.youtube.com/watch?v=e1DK5QP4Be4 | Скопје пеш — плоштад, Камен мост, Вардар | 37:36",
+        'default'           => '',
         'sanitize_callback' => 'sanitize_textarea_field',
     ));
     $wp_customize->add_control('macedonia_mk_youtube_list', array(
         'label'       => __('YouTube videos', 'macedonia-mk'),
-        'description' => __('One per line: URL | title | duration', 'macedonia-mk'),
+        'description' => __('Optional. One per line: URL | title | duration. Leave empty to hide the rail.', 'macedonia-mk'),
         'section'     => 'macedonia_mk_newsroom',
         'type'        => 'textarea',
     ));
 
     $wp_customize->add_setting('macedonia_mk_tiktok_list', array(
-        'default'           => "https://www.tiktok.com/@ristespiroski/video/7405651822540606725 | Охридско Езеро во 15 секунди | 0:14\nhttps://www.tiktok.com/@finnmacedonia/video/7518701632549358870 | Што да пробате следно во Македонија | 1:24\nhttps://www.tiktok.com/@pelagonec7/video/7641071211287530772 | Охрид 1984 — архива што сè уште дише | 0:14",
+        'default'           => '',
         'sanitize_callback' => 'sanitize_textarea_field',
     ));
     $wp_customize->add_control('macedonia_mk_tiktok_list', array(
         'label'       => __('TikTok videos', 'macedonia-mk'),
-        'description' => __('One per line: URL | title | duration', 'macedonia-mk'),
+        'description' => __('Optional. One per line: URL | title | duration. Leave empty to hide the rail.', 'macedonia-mk'),
         'section'     => 'macedonia_mk_newsroom',
         'type'        => 'textarea',
     ));

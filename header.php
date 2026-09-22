@@ -51,8 +51,8 @@ if (! defined('ABSPATH')) {
             <?php macedonia_mk_logo(); ?>
             <div class="mk-header__actions">
                 <?php
-                $saved = get_page_by_path('saved');
-                $saved_url = $saved ? get_permalink($saved) : home_url('/saved/');
+                $saved = macedonia_mk_existing_page(array('saved', 'zachuvano', 'favorites'));
+                $saved_url = $saved ? get_permalink($saved) : home_url('/');
                 ?>
                 <a class="mk-icon-btn" style="position:relative" href="<?php echo esc_url($saved_url); ?>" aria-label="<?php echo esc_attr(macedonia_mk_t('saved')); ?>">
                     <?php macedonia_mk_icon('bookmark'); ?>

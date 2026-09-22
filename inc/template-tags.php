@@ -306,10 +306,25 @@ function macedonia_mk_pagination() {
 function macedonia_mk_fallback_menu() {
     echo '<ul class="mk-nav__list">';
     echo '<li class="' . (is_front_page() ? 'current-menu-item' : '') . '"><a href="' . esc_url(home_url('/')) . '">' . esc_html(macedonia_mk_t('home')) . '</a></li>';
-    $cats = get_categories(array('hide_empty' => true, 'number' => 10));
+    $cats = get_categories(array(
+        'hide_empty' => true,
+        'number'     => 12,
+        'parent'     => 0,
+        'orderby'    => 'name',
+    ));
     foreach ($cats as $cat) {
         $active = is_category($cat->term_id) ? ' current-menu-item' : '';
         echo '<li class="' . esc_attr($active) . '"><a href="' . esc_url(get_category_link($cat)) . '">' . esc_html($cat->name) . '</a></li>';
     }
     echo '</ul>';
+}
+
+function macedonia_mk_existing_page($slugs) {
+    foreach ((array) $slugs as $slug) {
+        $page = get_page_by_path($slug);
+        if ($page && 'publish' === $page->post_status) {
+            return $page;
+        }
+    }
+    return null;
 }

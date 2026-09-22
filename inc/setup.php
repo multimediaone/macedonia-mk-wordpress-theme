@@ -185,9 +185,59 @@ function macedonia_mk_excerpt_more() {
 add_filter('excerpt_more', 'macedonia_mk_excerpt_more');
 
 /**
- * After first activation, load the complete newspaper and menus.
+ * On activate: map existing menus to this theme's locations.
+ * Never creates, deletes or overwrites posts, pages, categories or menu items.
  */
 function macedonia_mk_after_switch() {
-    macedonia_mk_seed_site(false);
+    macedonia_mk_adopt_existing_menus();
 }
 add_action('after_switch_theme', 'macedonia_mk_after_switch');
+
+function macedonia_mk_adopt_existing_menus() {
+    $locations = get_theme_mod('nav_menu_locations', array());
+    if (! is_array($locations)) {
+        $locations = array();
+    }
+    $menus = wp_get_nav_menus();
+    if (! $menus) {
+        return;
+    }
+
+    if (empty($locations['primary'])) {
+        $pick    = null;
+        $needles = array('primary', 'main', 'header', 'top', 'glavno', 'главно', 'навигац');
+        foreach ($menus as $menu) {
+            $hay = strtolower($menu->name . ' ' . $menu->slug);
+            foreach ($needles as $needle) {
+                if (false !== strpos($hay, $needle)) {
+                    $pick = $menu;
+                    break 2;
+                }
+            }
+        }
+        if (! $pick) {
+            $max = -1;
+            foreach ($menus as $menu) {
+                if ((int) $menu->count > $max) {
+                    $max  = (int) $menu->count;
+                    $pick = $menu;
+                }
+            }
+        }
+        if ($pick) {
+            $locations['primary'] = (int) $pick->term_id;
+        }
+    }
+
+    if (empty($locations['footer'])) {
+        foreach ($menus as $menu) {
+            $hay = strtolower($menu->name . ' ' . $menu->slug);
+            if (false !== strpos($hay, 'footer') || false !== strpos($hay, 'футер')) {
+                $locations['footer'] = (int) $menu->term_id;
+                break;
+            }
+        }
+    }
+
+    set_theme_mod('nav_menu_locations', $locations);
+}

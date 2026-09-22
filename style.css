@@ -3,8 +3,8 @@ Theme Name: Macedonia.mk
 Theme URI: https://macedonia.mk
 Author: Macedonia.mk
 Author URI: https://macedonia.mk
-Description: Complete Macedonia.mk newspaper — 24 demo articles, authors, images, pages, YouTube/TikTok rails, bilingual MK/EN. Magazine homepage, breaking ticker, SEO, social embeds, posts, categories, featured images, menus, search and comments.
-Version: 1.1.0
+Description: Newspaper design for the existing Macedonia.mk WordPress site. Uses live posts, categories, featured images, menus and permalinks from the database. Does not add or delete content. Homepage shows the 10 latest published articles.
+Version: 1.2.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
